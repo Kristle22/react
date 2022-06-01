@@ -29,8 +29,8 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
+        <h1>KIRPYKLA</h1>
         <div className='kvc'>
-          <h1>KIRPYKLA</h1>
           {avys
             .filter((a) => a.location === 'kirpykla')
             .map((a) => (

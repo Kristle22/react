@@ -4,7 +4,7 @@ import './crud.scss'
 import Create from './Components/crud/Create'
 import List from './Components/crud/List'
 import Edit from './Components/crud/Edit'
-import { create, read, remove } from './FUNCTIONS/localStorage'
+import { create, edit, read, remove } from './FUNCTIONS/localStorage'
 // import './App.scss'
 
 function App() {
@@ -18,6 +18,8 @@ function App() {
 
   const [deleteData, setDeleteData] = useState(null)
 
+  const [editData, setEditData] = useState(null)
+
   // Read
   useEffect(() => {
     setExes(read())
@@ -29,7 +31,7 @@ function App() {
       return
     }
     create(createData)
-    setLastUpdate(new Date())
+    setLastUpdate(Date.now())
   }, [createData])
 
   // Delete
@@ -38,8 +40,16 @@ function App() {
       return
     }
     remove(deleteData)
-    setLastUpdate(new Date())
+    setLastUpdate(Date.now())
   }, [deleteData])
+
+  useEffect(() => {
+    if (null === editData) {
+      return
+    }
+    edit(editData)
+    setLastUpdate(Date.now())
+  }, [editData])
 
   return (
     <>
@@ -57,7 +67,11 @@ function App() {
           </div>
         </div>
       </div>
-      <Edit modalData={modalData} setModalData={setDeleteData} />
+      <Edit
+        setEditData={setEditData}
+        modalData={modalData}
+        setModalData={setModalData}
+      />
     </>
   )
 }

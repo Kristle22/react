@@ -7,7 +7,7 @@ function List({ exes, setDeleteData, setModalData }) {
         <h2>List of Ex'es</h2>
       </div>
       <div className='card-body'>
-        <ul class='list-group'>
+        <ul className='list-group'>
           {exes
             ? exes.map((ex) => (
                 <Ex
