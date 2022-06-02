@@ -7,7 +7,7 @@ export function create(obj) {
     data = JSON.stringify([]);
   }
   data = JSON.parse(data);
-  data.id = getId(key + '_id');
+  obj.id = getId(key + '_id');
   data.push(obj);
   data = JSON.stringify(data);
   localStorage.setItem(key, data);
