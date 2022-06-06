@@ -173,3 +173,16 @@ span {
   }
 }
 // <div class="lds-hourglass"></div>
+
+svg {
+  width: 30px;
+  height: 30px;
+  fill: crimson;
+}
+.kitas-svg:hover {
+  fill: yellow;
+}
+.trecias-svg:hover {
+  transform: scale(0.7);
+  fill: yellow;
+}
