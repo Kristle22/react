@@ -1,140 +1,80 @@
-import { useState, useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import './App.scss';
-import colorReducer from './Reducers/colorReducer';
-import randomReducer from './Reducers/randomReducer';
-import rand from './FUNCTIONS/randNumbers';
-import textReducer from './Reducers/textReducer';
-import kvadrReducer from './Reducers/kvadrReducer';
+import renderReducer from './Reducers/renderReducer';
+import randColor from './FUNCTIONS/randColor';
 
 function App() {
-  const [color, dispachColor] = useReducer(colorReducer, 'yellow');
-  const [random, dispachRandom] = useReducer(randomReducer, '0000');
+  const [render, dispachRender] = useReducer(renderReducer, []);
 
-  const [text, dispachText] = useReducer(textReducer, 'New text reducer!');
-
-  const [colorInput, setColorInput] = useState('#f8dd00');
-
-  const [inputText, setInputText] = useState('');
-
-  const [h2, setH2] = useState('');
-
-  const [kvadr, dispachKvadr] = useReducer(kvadrReducer, []);
-
-  const goPink = () => {
+  const renderRandom = () => {
     const action = {
-      type: 'go_pink',
+      type: 'randomNumbers',
     };
-    dispachColor(action);
+    dispachRender(action);
+  };
+  const sortRandom = () => {
+    const action = {
+      type: 'sort',
+    };
+    dispachRender(action);
   };
 
-  const goYellow = () => {
+  const filterUp5000 = () => {
     const action = {
-      type: 'go_y',
+      type: 'more_than',
     };
-    dispachColor(action);
+    dispachRender(action);
   };
 
-  const goChange = () => {
+  const filterBelow4000 = () => {
     const action = {
-      type: 'change_color',
+      type: 'less_than',
     };
-    dispachColor(action);
+    dispachRender(action);
   };
 
-  const goRandom = () => {
+  const showAll = () => {
     const action = {
-      type: 'go_rand',
+      type: 'show_all',
     };
-    dispachRandom(action);
+    dispachRender(action);
   };
 
-  const goRandom2 = () => {
+  const defSort = () => {
     const action = {
-      type: 'go_rand2',
-      payload: rand(0, 100),
+      type: 'def_sort',
     };
-    dispachRandom(action);
+    dispachRender(action);
   };
 
-  const goChangeTo = () => {
+  const addBlack = () => {
     const action = {
-      type: 'change_colorTo',
-      payload: colorInput,
+      type: 'add_black',
     };
-    dispachColor(action);
+    dispachRender(action);
   };
-
-  const goChangeText = () => {
-    const action = {
-      type: 'change_text',
-      payload: inputText,
-    };
-    dispachText(action);
-  };
-
-  const goText = () => {
-    setH2(inputText);
-    const action = {
-      type: 'go_text',
-      payload: inputText,
-    };
-    dispachRandom(action);
-  };
-
-  const goKvadr = () => {
-    const action = {
-      type: 'go_kvadr',
-    };
-    dispachKvadr(action);
-  };
-
-  // useEffect(() => {
-  //   setInterval(() => dispachColor({ type: 'change_color' }), 3000);
-  // }, []);
 
   return (
     <div className='App'>
       <header className='App-header'>
-        <h1 style={{ backgroundColor: color }}> Learn useReducer!!!</h1>
-        <h1>{text}</h1>
-        <i>{inputText}</i>
-        <button onClick={goChangeText}>Change Text</button>
+        <h1>REDUCER</h1>
         <div className='kvc'>
-          {kvadr.map((k, i) => (
-            <div key={i} className='kv'>
-              {k}
-            </div>
-          ))}
+          {render.map((k, i) =>
+            k.show ? (
+              <div key={i} className='kv' style={{ background: k.color }}>
+                <i>{k.number}</i>
+                {/* {k} */}
+              </div>
+            ) : null
+          )}
         </div>
-        <button onClick={goKvadr}>GO Kvadr</button>
-
-        <h2>useState H2 value: {h2}</h2>
-        <div className='kvc'>
-          <button onClick={goPink}>Go pink</button>
-          <button onClick={goYellow}>Go yellow</button>
-          <button onClick={goChange}>Go and Change</button>
-        </div>
-        <h2>{random}</h2>
-        <div className='kvc'>
-          <button onClick={goRandom}>Go random</button>
-          <button onClick={goRandom2}>Go random2</button>
-          <input
-            type='color'
-            value={colorInput}
-            onChange={(e) => {
-              setColorInput(e.target.value);
-            }}
-          />
-          <button onClick={goChangeTo}>this color</button>
-          <input
-            type='text'
-            value={inputText}
-            onChange={(e) => {
-              setInputText(e.target.value);
-            }}
-          />
-          <button onClick={goText}>GO Text</button>
-        </div>
+        <button onClick={renderRandom}>Render random</button>
+        <button onClick={sortRandom}>Sort random</button>
+        <button onClick={defSort}>Default sort</button>
+        <button onClick={filterUp5000}>Filter daugiau nei 5000</button>
+        <button onClick={filterBelow4000}>Filter maziau nei 4000</button>
+        <button onClick={showAll}>Show all again</button>
+        <button onClick={addBlack}>Add Black</button>
       </header>
     </div>
   );
