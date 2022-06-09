@@ -1,80 +1,52 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import './App.scss';
-import renderReducer from './Reducers/renderReducer';
-import randColor from './FUNCTIONS/randColor';
+import axios from 'axios';
+import listReducer from './Reducers/listReducer';
 
 function App() {
-  const [render, dispachRender] = useReducer(renderReducer, []);
+  // const [list, setList] = useState([]);
 
-  const renderRandom = () => {
-    const action = {
-      type: 'randomNumbers',
-    };
-    dispachRender(action);
-  };
-  const sortRandom = () => {
+  // useEffect(() => {
+  //   axios.get('http://in3.dev/knygos/').then((res) => setList(res.data));
+  // }, []);
+
+  const [list, dispachList] = useReducer(listReducer, []);
+
+  useEffect(() => {
+    axios.get('http://in3.dev/knygos/').then((res) => {
+      const action = {
+        type: 'book_title',
+        payload: res.data,
+      };
+      dispachList(action);
+    });
+  }, []);
+
+  const sortBooks = () => {
     const action = {
       type: 'sort',
     };
-    dispachRender(action);
+    dispachList(action);
   };
-
-  const filterUp5000 = () => {
-    const action = {
-      type: 'more_than',
-    };
-    dispachRender(action);
-  };
-
-  const filterBelow4000 = () => {
-    const action = {
-      type: 'less_than',
-    };
-    dispachRender(action);
-  };
-
-  const showAll = () => {
-    const action = {
-      type: 'show_all',
-    };
-    dispachRender(action);
-  };
-
   const defSort = () => {
     const action = {
       type: 'def_sort',
     };
-    dispachRender(action);
-  };
-
-  const addBlack = () => {
-    const action = {
-      type: 'add_black',
-    };
-    dispachRender(action);
+    dispachList(action);
   };
 
   return (
     <div className='App'>
       <header className='App-header'>
         <h1>REDUCER</h1>
-        <div className='kvc'>
-          {render.map((k, i) =>
-            k.show ? (
-              <div key={i} className='kv' style={{ background: k.color }}>
-                <i>{k.number}</i>
-                {/* {k} */}
-              </div>
-            ) : null
-          )}
-        </div>
-        <button onClick={renderRandom}>Render random</button>
-        <button onClick={sortRandom}>Sort random</button>
-        <button onClick={defSort}>Default sort</button>
-        <button onClick={filterUp5000}>Filter daugiau nei 5000</button>
-        <button onClick={filterBelow4000}>Filter maziau nei 4000</button>
-        <button onClick={showAll}>Show all again</button>
-        <button onClick={addBlack}>Add Black</button>
+        <h2>Book list</h2>
+        {list.length ? (
+          list.map((el) => <div key={el.id}>{el.title}</div>)
+        ) : (
+          <div className='lds-hourglass'></div>
+        )}
+        <button onClick={sortBooks}>sort Books</button>
+        <button onClick={defSort}>defSort Books</button>
       </header>
     </div>
   );
