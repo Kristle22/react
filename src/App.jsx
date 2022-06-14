@@ -1,54 +1,23 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useState } from 'react';
 import './App.scss';
-import axios from 'axios';
-import listReducer from './Reducers/listReducer';
+import Suo from './Components/024/Suo';
+import Duomenys from './Contexts/Duomenys';
 
 function App() {
-  // const [list, setList] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get('http://in3.dev/knygos/').then((res) => setList(res.data));
-  // }, []);
-
-  const [list, dispachList] = useReducer(listReducer, []);
-
-  useEffect(() => {
-    axios.get('http://in3.dev/knygos/').then((res) => {
-      const action = {
-        type: 'book_title',
-        payload: res.data,
-      };
-      dispachList(action);
-    });
-  }, []);
-
-  const sortBooks = () => {
-    const action = {
-      type: 'sort',
-    };
-    dispachList(action);
-  };
-  const defSort = () => {
-    const action = {
-      type: 'def_sort',
-    };
-    dispachList(action);
-  };
+  const [counter1, setCounter1] = useState(1);
+  const [counter2, setCounter2] = useState(3);
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <h1>REDUCER</h1>
-        <h2>Book list</h2>
-        {list.length ? (
-          list.map((el) => <div key={el.id}>{el.title}</div>)
-        ) : (
-          <div className='lds-hourglass'></div>
-        )}
-        <button onClick={sortBooks}>sort Books</button>
-        <button onClick={defSort}>defSort Books</button>
-      </header>
-    </div>
+    <Duomenys.Provider value={{ counter1, counter2 }}>
+      <div className='App'>
+        <header className='App-header'>
+          <h1>CONTEXT</h1>
+          <Suo />
+          <button onClick={() => setCounter1((c) => c + 1)}>PLUS 1</button>
+          <button onClick={() => setCounter2((c) => c + 3)}>PLUS 3</button>
+        </header>
+      </div>
+    </Duomenys.Provider>
   );
 }
 export default App;

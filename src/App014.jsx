@@ -1,29 +1,29 @@
-import { useState } from 'react'
-import './App.scss'
-import randColor from './FUNCTIONS/randColor'
+import { useState } from 'react';
+import './App.scss';
+// import randColor from './FUNCTIONS/randColor'
 // import { v4 as uuidv4 } from 'uuid'
 
 function App() {
-  const [text, setText] = useState('')
-  const [color, setColor] = useState('#f77')
-  const [select, setSelect] = useState('tree')
-  console.log(select)
+  const [text, setText] = useState('');
+  const [color, setColor] = useState('#f77');
+  const [select, setSelect] = useState('tree');
+  console.log(select);
 
-  const [chbox, setChbox] = useState({ a: false, b: false, c: true, d: false })
-  const [radio, setRadio] = useState('c')
+  const [chbox, setChbox] = useState({ a: false, b: false, c: true, d: false });
+  const [radio, setRadio] = useState('c');
 
   const insertText = (e) => {
-    setText(e.target.value)
-    console.log(text)
-  }
+    setText(e.target.value);
+    console.log(text);
+  };
 
   const chooseColor = (e) => {
-    setColor(e.target.value)
-  }
+    setColor(e.target.value);
+  };
 
   const cbClick = (e) => {
-    setChbox((cb) => ({ ...cb, [e]: !cb[e] }))
-  }
+    setChbox((cb) => ({ ...cb, [e]: !cb[e] }));
+  };
 
   return (
     <div className='App'>
@@ -113,7 +113,7 @@ function App() {
         </fieldset>
       </header>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
