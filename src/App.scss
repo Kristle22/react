@@ -130,10 +130,12 @@ h1 {
   color: #fff;
 }
 span {
+  width: 25%;
+  text-align: left;
   display: block;
   margin-top: 2rem;
   font-size: 0.7rem;
-  color: #777;
+  color: #fff;
   a {
     font-size: 0.7rem;
     color: #999;
@@ -188,4 +190,13 @@ svg {
 }
 .h1 {
   transition: all 2s ease-out;
+}
+
+.kvcf {
+  display: flex;
+  font-size: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 90vw;
 }

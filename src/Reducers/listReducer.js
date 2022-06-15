@@ -15,6 +15,9 @@ function listReducer(state, action) {
     case 'def_sort':
       newState = [...state].sort((a, b) => a.row - b.row);
       break;
+    case 'book_category':
+      newState = action.payload.map((categ, i) => ({ ...categ, row: i }));
+      break;
     default:
       newState = [...state];
   }

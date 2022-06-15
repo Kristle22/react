@@ -1,23 +1,57 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useReducer, useState } from 'react';
 import './App.scss';
-import Suo from './Components/024/Suo';
-import Duomenys from './Contexts/Duomenys';
+import listReduc from './Reducers/listReduc';
 
 function App() {
-  const [counter1, setCounter1] = useState(1);
-  const [counter2, setCounter2] = useState(3);
+  const masyvas = [
+    { id: 3, name: 'Peter', bid: 487.77, date: 'December 17, 2021 03:24:00' },
+    { id: 7, name: 'Mary', bid: 125.33, date: 'March 17, 2022 03:24:00' },
+    { id: 8, name: 'Ąžuolas', bid: 78.25, date: '3/30/22' },
+    {
+      id: 9,
+      name: 'Petras Dainorius',
+      bid: 487.77,
+      date: '2022-06-01T08:13',
+    },
+  ];
+
+  const [list, dispachList] = useReducer(listReduc, masyvas);
+
+  const [select, setSelect] = useState('bid_desc');
+
+  useEffect(() => {
+    dispachList({ type: select });
+  }, [select]);
 
   return (
-    <Duomenys.Provider value={{ counter1, counter2 }}>
-      <div className='App'>
-        <header className='App-header'>
-          <h1>CONTEXT</h1>
-          <Suo />
-          <button onClick={() => setCounter1((c) => c + 1)}>PLUS 1</button>
-          <button onClick={() => setCounter2((c) => c + 3)}>PLUS 3</button>
-        </header>
-      </div>
-    </Duomenys.Provider>
+    <div className='App'>
+      <header className='App-header'>
+        <h1>Koks nors sortas</h1>
+        <div className='kvcf'>
+          <select value={select} onChange={(e) => setSelect(e.target.value)}>
+            <option value='date_asc'>DATE ASC</option>
+            <option value='date_desc'>DATE DESC</option>
+            <option value='bid_asc'>BID ASC</option>
+            <option value='bid_desc'>BID DESC</option>
+            <option value='name_asc'>NAME ASC</option>
+            <option value='name_desc'>NAME DESC</option>
+            <option value='name_asc_local'>NAME ASC LOCAL</option>
+            <option value='random'>RANDOM</option>
+          </select>
+        </div>
+        <div>
+          {list.map((b) => (
+            <div key={b.id} className='kvcf'>
+              <span>ID: {b.id}</span>
+              <span>Name: {b.name}</span>
+              <span>BID: {b.bid}</span>
+              <span>Date: {b.date}</span>
+            </div>
+          ))}
+        </div>
+      </header>
+    </div>
   );
 }
 export default App;

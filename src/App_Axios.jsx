@@ -22,6 +22,14 @@ function App() {
     });
   }, []);
 
+  axios.get('https://in3.dev/knygos/types/').then((res) => {
+    const action = {
+      type: 'book_category',
+      payload: res.data,
+    };
+    dispachList(action);
+  });
+
   const sortBooks = () => {
     const action = {
       type: 'sort',
