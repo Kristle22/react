@@ -14,6 +14,8 @@ function App() {
   const [books, dispachBooks] = useReducer(bookReducer, []);
   const [types, dispachTypes] = useReducer(bookTypeReducer, []);
 
+  // const [reload, setReload] = useReducer(reloadReducer, []);
+
   useEffect(() => {
     axios.get('http://in3.dev/knygos/').then((res) => {
       const action = {
