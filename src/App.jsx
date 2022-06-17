@@ -64,11 +64,20 @@ function App() {
   };
 
   const reload = () => {
-    const action = {
-      type: 'reload',
-      payload: books,
-    };
-    dispachBooks(action);
+    axios.get('https://in3.dev/knygos/types/').then((_) => {
+      const action = {
+        type: 'reload',
+        payload: books,
+      };
+      dispachBooks(action);
+    });
+    axios.get('https://in3.dev/knygos/types/').then((_) => {
+      const action = {
+        type: 'reload',
+        payload: types,
+      };
+      dispachTypes(action);
+    });
   };
 
   return (
